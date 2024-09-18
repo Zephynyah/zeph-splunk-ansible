@@ -1,0 +1,8 @@
+---
+- name: "Start splunk service"
+  ansible.builtin.systemd:
+    name: "{{ splunk_service }}"
+    enabled: false
+    state: stopped
+    daemon_reload: true
+  become: true

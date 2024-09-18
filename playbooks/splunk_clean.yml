@@ -1,0 +1,88 @@
+---
+- name: Remove splunk
+  hosts:
+    - all
+  gather_facts: true
+  become: yes
+  become_method: sudo  
+  ignore_errors: true
+
+  tasks:
+    - name: Populate service facts
+      service_facts:
+
+    - debug:
+       var: ansible_facts.services['Splunkd.service']
+      when: 
+        - "'full' in group_names"
+
+    - name: Ensure Splunkd service unit is not running
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      become: true
+      loop:
+        - Splunkd.service
+        - firewalld.service
+      when: 
+        - "'full' in group_names"
+        - ansible_facts.services[item] is defined
+
+    - debug:
+       var: ansible_facts.services['SplunkForwarder.service']
+      when: 
+        - "'uf' in group_names"
+
+    - name: Enure SplunkForwarder service unit is not running
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      become: true
+      loop:
+        - SplunkForwarder.service
+        - firewalld.service
+      when: 
+        - "'uf' in group_names"
+        - ansible_facts.services[item] is defined
+
+    - name: Recursively remove Splunkd service and directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      become: true
+      loop:
+       - /etc/systemd/system/Splunkd.service
+       - /opt/splunk
+      when: "'full' in group_names"
+      #failed_when: false
+
+    - name: Recursively remove SplunkForwarder service and directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      become: true
+      loop:
+       - /etc/systemd/system/SplunkForwarder.service
+       - /opt/splunkforwarder
+      when: "'uf' in group_names"
+
+    - name: Ensure splunk users are removed
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        state: absent
+        groups: "{{ item.groups }}"
+      become: true
+      loop:
+        - { name: 'splunk', groups: 'splunk' }
+        - { name: 'splunkfwd', groups: 'splunkfwd' }
+
+    - name: Ensure splunks groups are removed
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: absent
+      become: true
+      loop:
+        - 'splunk'
+        - 'splunkfwd' 

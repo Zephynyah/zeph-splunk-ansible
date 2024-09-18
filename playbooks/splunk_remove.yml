@@ -1,0 +1,14 @@
+---
+- name: Remove splunk
+  hosts:
+    - all
+  gather_facts: true
+  become: yes
+  become_method: sudo  
+  ignore_errors: true
+  roles:
+    - splunk
+  vars:
+    - deployment_task: remove_splunk.yml
+ 
+
