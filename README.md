@@ -1,7 +1,7 @@
 # An Ansible role for Splunk admins (splunk-ansible-role)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)&nbsp;
-[![GitHub release](https://img.shields.io/github/v/tag/splunk/ansible-role-for-splunk?sort=semver&label=Version)](https://github.com/splunk/ansible-role-for-splunk/releases)
+[![GitHub release](https://img.shields.io/github/v/tag/splunk/ansible-role-for-splunk?sort=semver&label=Version)](https://github.com/Zephynyah/zeph-splunk-ansible/releases)
 
 This repository contains Splunk's official Ansible role for performing Splunk administration of remote hosts over SSH. This role can manage Splunk Enterprise and Universal Forwarders that are on Linux-based platforms (CentOS/Redhat/Ubuntu/Amazon Linux/OpenSUSE), as well as deploy configurations from Git repositories. Example playbooks and inventory files are also provided to help new Ansible users make the most out of this project.
 
