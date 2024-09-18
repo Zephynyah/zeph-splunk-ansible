@@ -1,4 +1,4 @@
-# ansible-role-for-splunk: An Ansible role for Splunk admins
+# An Ansible role for Splunk admins (splunk-ansible-role)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)&nbsp;
 [![GitHub release](https://img.shields.io/github/v/tag/splunk/ansible-role-for-splunk?sort=semver&label=Version)](https://github.com/splunk/ansible-role-for-splunk/releases)
